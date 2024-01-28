@@ -1,0 +1,4 @@
+azure-search-documents
+openai
+python-dotenv
+semantic-kernel
