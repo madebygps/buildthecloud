@@ -50,8 +50,8 @@ async def populate_memory():
 
     memory_collection_name = "SKCertifications"
     print("Adding some Azure Study guide URLs and their descriptions to a volatile Semantic Memory.")
-    i = 0
-    for entry, value in certification_files.items():
+
+    for i, (entry, value) in enumerate(certification_files.items()):
         await kernel.memory.save_reference(
             collection=memory_collection_name,
             description=value,
@@ -59,8 +59,8 @@ async def populate_memory():
             external_id=entry,
             external_source_name="Microsoft Learn",
         )
-        i += 1
-        print("  URL {} saved".format(i))
+
+        print("  URL {} saved".format(i + 1))
 
 async def main():
     await populate_memory()
@@ -70,10 +70,8 @@ async def main():
     memory_collection_name = "SKCertifications"
     memories = await kernel.memory.search(memory_collection_name, ask, limit=5, min_relevance_score=0.77)
 
-    i = 0
-    for memory in memories:
-        i += 1
-        print(f"Result {i}:")
+    for i, memory in enumerate(memories):
+        print(f"Result {i + 1}:")
         print("  URL:     : " + memory.id)
         print("  Title    : " + memory.description)
         print("  Relevance: " + str(memory.relevance))
